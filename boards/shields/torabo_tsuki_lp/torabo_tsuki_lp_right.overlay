@@ -7,11 +7,22 @@
     require-prior-idle-ms = <500>;
 };
 
+//&trackball_listener {
+//    input-processors =
+//        <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
+//        <&zip_temp_layer 1 10000>;
+//};
+
 &trackball_listener {
     input-processors =
         <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
-        <&zip_temp_layer 1 10000>,
-        <&zip_xy_to_scroll_mapper>;
+        <&zip_temp_layer 1 10000>;
+
+    /* レイヤー3の時だけ追加でこのプロセッサを動かす、という定義 */
+    scroll-layer-3 {
+        layers = <3>;
+        input-processors = <&zip_xy_to_scroll_mapper>;
+    };
 };
 
 &size_s_transform {
